@@ -1,0 +1,30 @@
+1. HTML: El contenedor y la carga diferida
+Nunca pegues el <iframe> directamente tal cual te lo da Google. Para optimizar, utilizaremos un atributo nativo y una estructura limpia.
+
+loading="lazy": Fundamental. Le dice al navegador que no cargue el mapa hasta que el usuario haga scroll cerca de él.
+
+Contenedor: Envuelve el iframe en un div para controlar el responsive.
+
+2. CSS: Diseño Responsive Moderno
+El mayor problema es que el mapa se "rompa" en móviles o sea muy pequeño.
+
+La práctica moderna: Usa aspect-ratio. Esto mantiene la proporción del mapa (ej. 16:9) sin importar el ancho de la pantalla.
+
+3. JavaScript: Patrón "Fachada" (Facade Pattern)
+Esta es la mejor práctica profesional. En lugar de cargar el iframe (que pesa mucho) de inmediato, muestras una imagen estática (una captura del mapa o un botón). El mapa real solo se carga cuando el usuario interactúa o hace scroll.
+
+Esto mejora drásticamente la velocidad de tu sitio.
+
+A. Carga solo cuando es visible (Intersection Observer)
+Si no quieres usar un botón, usa JS para inyectar el iframe solo cuando el usuario llegue a esa sección.
+
+4. UX: Evitar la "Trampa de Scroll"
+En móviles, es frustrante querer bajar por la página y quedar atrapado haciendo zoom en el mapa sin querer.
+
+Solución: Usa pointer-events.
+
+5. Fallback y Estado Offline
+Si el usuario no tiene internet o Google Maps falla, no debe verse un cuadro gris roto.
+
+Estrategia: Detectar conexión con navigator.onLine.
+

@@ -1,0 +1,81 @@
+/* =========================================
+   START: Theme Toggle Logic (Dark/Light Mode)
+   Improved: System preference + no FA dependency
+   ========================================= */
+
+const themeBtn = document.getElementById('theme-toggle');
+const themeIcon = themeBtn ? themeBtn.querySelector('i') : null;
+
+// Optional fallback text element inside button (recommended):
+// <span class="theme-label"></span>
+const themeLabel = themeBtn ? themeBtn.querySelector('.theme-label') : null;
+
+// 1) Decide initial theme:
+// - If user already chose (localStorage), respect it
+// - Else, follow system preference (prefers-color-scheme)
+const savedTheme = localStorage.getItem('theme');
+const systemPrefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+let initialTheme = 'light';
+if (savedTheme === 'dark' || savedTheme === 'light') {
+  initialTheme = savedTheme;
+} else {
+  initialTheme = systemPrefersDark ? 'dark' : 'light';
+}
+
+// Apply initial theme
+document.body.classList.toggle('dark-mode', initialTheme === 'dark');
+
+function updateThemeUI(isDark) {
+  // Save preference
+  localStorage.setItem('theme', isDark ? 'dark' : 'light');
+
+  // 2) Icon toggle (only if icon exists AND classes exist)
+  if (themeIcon) {
+    // Works with Font Awesome if present, but doesn't break if not
+    themeIcon.classList.toggle('fa-sun', isDark);
+    themeIcon.classList.toggle('fa-moon', !isDark);
+  }
+
+  // 3) Optional text fallback (works without any icon library)
+  if (themeLabel) {
+    themeLabel.textContent = isDark ? '☀' : '☾';
+  }
+
+  // 4) Accessibility (optional but recommended)
+  if (themeBtn) {
+    themeBtn.setAttribute('aria-pressed', String(isDark));
+    themeBtn.setAttribute('aria-label', isDark ? 'Cambiar a modo claro' : 'Cambiar a modo oscuro');
+  }
+}
+
+// Set UI according to initial theme
+updateThemeUI(initialTheme === 'dark');
+
+// Click handler
+if (themeBtn) {
+  themeBtn.addEventListener('click', () => {
+    const isDark = !document.body.classList.contains('dark-mode');
+    document.body.classList.toggle('dark-mode', isDark);
+    updateThemeUI(isDark);
+  });
+}
+
+// 5) Optional: If user has NOT chosen a theme yet, follow system changes live
+// (If you don't want this behavior, remove this block)
+if (!savedTheme && window.matchMedia) {
+  const mq = window.matchMedia('(prefers-color-scheme: dark)');
+  const onChange = (e) => {
+    const isDark = e.matches;
+    document.body.classList.toggle('dark-mode', isDark);
+    updateThemeUI(isDark);
+  };
+
+  // Modern + fallback
+  if (mq.addEventListener) mq.addEventListener('change', onChange);
+  else if (mq.addListener) mq.addListener(onChange);
+}
+
+/* =========================================
+   END: Theme Toggle Logic (Dark/Light Mode)
+   ========================================= */

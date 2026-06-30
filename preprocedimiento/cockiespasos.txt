@@ -1,0 +1,25 @@
+No mostrar el mensaje si el usuario ya ha dado su consentimiento: Debemos almacenar la preferencia del usuario (por ejemplo, en una cookie o en localStorage) y no mostrar el mensaje si ya ha aceptado.
+
+Diseño no intrusivo pero visible: El mensaje debe ser visible pero no debe interferir con la experiencia del usuario más de lo necesario.
+
+Accesibilidad: Asegurarnos de que el mensaje sea accesible (usar ARIA attributes, permitir navegación por teclado, etc.).
+
+Semántica HTML: Utilizar etiquetas HTML apropiadas para el mensaje.
+
+Estilos CSS que no afecten el layout de la página principal: Posicionar el mensaje de manera que no cause cambios bruscos en el contenido.
+
+JavaScript no obstructivo: El código JavaScript debe manejarse de manera que si hay un error, la página siga funcionando.
+
+Funcionalidad para aceptar y posiblemente para rechazar: Aunque no es obligatorio ofrecer rechazo en todos los casos, es una buena práctica dar opción al usuario. En algunos casos (GDPR) es necesario.
+
+Información clara: El mensaje debe informar claramente sobre el uso de cookies y enlazar a una política de cookies detallada.
+
+
+
+Política de cookies: Asegúrate de tener una página con la política de cookies y enlazarla en el mensaje.
+
+Almacenamiento: Usamos localStorage para guardar la preferencia. Esto no es una cookie, pero es una forma simple y efectiva. Ten en cuenta que el usuario puede borrarlo. Si necesitas que la preferencia persista por más tiempo, podrías usar una cookie.
+
+Rechazo: Al rechazar, no cargamos los scripts de seguimiento. Sin embargo, si el usuario ya había aceptado previamente y luego rechaza, no estamos eliminando las cookies ya establecidas. Para un control más fino, podrías tener una función que elimine las cookies de seguimiento al rechazar (si es necesario).
+
+Estilos responsivos: Asegúrate de que el banner se vea bien en móviles.

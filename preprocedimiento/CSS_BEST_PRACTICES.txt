@@ -1,0 +1,73 @@
+# 🎨 Guía de Buenas Prácticas CSS Moderno
+
+Escribir CSS es fácil, pero mantenerlo ordenado es difícil. Estas prácticas aseguran un código limpio, rápido y escalable.
+
+## 1. Arquitectura y Organización
+
+*   **Evita IDs para Estilos:** Los IDs (`#header`) tienen una especificidad muy alta y son difíciles de sobrescribir. Usa siempre CLASES (`.header`).
+*   **Convención de Nombres (BEM Light):** Usa nombres que expliquen la estructura, no el estilo.
+    *   ❌ Mal: `.texto-rojo-grande`, `.caja2`
+    *   ✅ Bien: `.card__title`, `.nav__item--active` (Bloque \_\_ Elemento -- Modificador).
+
+## 2. Variables CSS (Custom Properties)
+
+No repitas códigos de color ni tamaños pixel a pixel. Define un sistema de diseño arriba del todo (`:root`).
+
+```css
+:root {
+    /* Colores */
+    --primary-color: #007bff;
+    --secondary-color: #6c757d;
+    --text-dark: #333333;
+    --bg-light: #f8f9fa;
+
+    /* Espaciado */
+    --spacing-sm: 8px;
+    --spacing-md: 16px;
+    --spacing-lg: 32px;
+}
+
+.btn-primary {
+    background-color: var(--primary-color); /* Fácil de cambiar globalmente */
+    padding: var(--spacing-sm) var(--spacing-md);
+}
+```
+
+## 3. Layout Moderno: Flexbox y Grid
+
+Olvida el `float: left`.
+
+*   **Flexbox:** Úsalo para componentes en **una dimensión** (filas O columnas). Ej: Barras de navegación, botones dentro de un formulario, alineación vertical.
+*   **CSS Grid:** Úsalo para estructuras en **dos dimensiones** (filas Y columnas). Ej: Una galería de fotos, el layout general de la página (Header + Sidebar + Main + Footer).
+
+## 4. Diseño Responsive (Mobile First)
+
+Escribe primero el CSS para móviles (la vista base) y añade media queries para pantallas grandes. Esto hace el código más ligero y rápido en móviles.
+
+```css
+/* Estilo base (Móvil) */
+.container {
+    width: 100%;
+    padding: 10px;
+}
+
+/* Modificación para Tablet/Desktop */
+@media (min-width: 768px) {
+    .container {
+        width: 750px;
+        margin: 0 auto; /* Centrado */
+    }
+}
+```
+
+## 5. Rendimiento y Mantenimiento
+
+*   **Reset o Normalize:** Usa siempre un CSS de reseteo al inicio (como `normalize.css`) para que tu web se vea igual en Chrome, Firefox y Safari.
+*   **Shorthand Properties:** Escribe menos código.
+    *   ❌ `padding-top: 10px; padding-right: 20px; padding-bottom: 10px; padding-left: 20px;`
+    *   ✅ `padding: 10px 20px;` (Arriba/Abajo Izq/Der)
+*   **Unidades Relativas:** Prioriza `rem` o [em]sobre `px` para fuentes y espaciados, para mejor accesibilidad. (Ej: `font-size: 1.5rem` escala si el usuario cambia el tamaño de letra en su navegador).
+
+
+---
+## 6. Cada vez que modifiques el archivo CSS, actualiza también el enlace en el HTML agregando o cambiando un parámetro de versión (query string), por ejemplo: style.css?v=2

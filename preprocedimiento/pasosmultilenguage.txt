@@ -1,0 +1,108 @@
+JAVASCRIPT: 
+
+
+
+
+/* =========================================
+   START: Internationalization (i18n) Logic
+   Reusable for any client
+   ========================================= */
+
+/* Language Translations (EDIT THIS PER CLIENT) */
+const translations = {
+  es: {
+    nav_home: "Inicio",
+    // ...
+  },
+  en: {
+    nav_home: "Home",
+    // ...
+  }
+  // Puedes agregar más: fr, pt, etc.
+};
+
+/* =========================
+   Core i18n Logic
+   ========================= */
+const langToggleBtn = document.getElementById('lang-toggle');
+const langTextSpan = langToggleBtn ? langToggleBtn.querySelector('.lang-text') : null;
+
+// Idioma por defecto: ES si existe; si no, el primero disponible
+const availableLangs = Object.keys(translations);
+const DEFAULT_LANG = translations.es ? 'es' : (availableLangs[0] || 'es');
+
+// Cargar preferencia guardada si existe y es válida
+let currentLang = localStorage.getItem('language') || DEFAULT_LANG;
+if (!translations[currentLang]) currentLang = DEFAULT_LANG;
+
+function getText(lang, key) {
+  // 1) Idioma actual
+  if (translations[lang] && translations[lang][key] != null) return translations[lang][key];
+  // 2) Fallback a default
+  if (translations[DEFAULT_LANG] && translations[DEFAULT_LANG][key] != null) return translations[DEFAULT_LANG][key];
+  // 3) Si no existe en ningún idioma, devuelve null para no tocar el DOM
+  return null;
+}
+
+function updateLanguage(lang) {
+  if (!translations[lang]) lang = DEFAULT_LANG;
+
+  // Text Content
+  const elements = document.querySelectorAll('[data-i18n]');
+  elements.forEach(element => {
+    const key = element.getAttribute('data-i18n');
+    const value = getText(lang, key);
+    if (value == null) return;
+
+    // Safe Text Node Replacement to preserve icons
+    let textNodeFound = false;
+    element.childNodes.forEach(node => {
+      if (node.nodeType === Node.TEXT_NODE && node.textContent.trim().length > 0) {
+        node.textContent = value;
+        textNodeFound = true;
+      }
+    });
+
+    // If no text nodes and no children, set normally
+    if (!textNodeFound && element.children.length === 0) {
+      element.textContent = value;
+    } else if (!textNodeFound && element.tagName === 'LI' && element.querySelector('i')) {
+      // Special case: list item with icon
+      element.innerHTML = element.querySelector('i').outerHTML + " " + value;
+    }
+  });
+
+  // Input Placeholders
+  const placeholders = document.querySelectorAll('[data-i18n-placeholder]');
+  placeholders.forEach(element => {
+    const key = element.getAttribute('data-i18n-placeholder');
+    const value = getText(lang, key);
+    if (value == null) return;
+    element.placeholder = value;
+  });
+
+  // Update toggle label (si existe)
+  if (langTextSpan) {
+    langTextSpan.textContent = lang.toUpperCase();
+  }
+
+  localStorage.setItem('language', lang);
+  currentLang = lang;
+}
+
+// Initial Load
+updateLanguage(currentLang);
+
+// Toggle Button (si existe)
+if (langToggleBtn) {
+  langToggleBtn.addEventListener('click', () => {
+    // Cicla entre idiomas disponibles en el objeto translations
+    const idx = availableLangs.indexOf(currentLang);
+    const nextLang = availableLangs[(idx + 1) % availableLangs.length] || DEFAULT_LANG;
+    updateLanguage(nextLang);
+  });
+}
+
+/* =========================================
+   END: Internationalization (i18n) Logic
+   ========================================= */

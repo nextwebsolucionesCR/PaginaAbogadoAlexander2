@@ -1,0 +1,82 @@
+# 🔍 Guía de Buenas Prácticas SEO (HTML/CSS/JS)
+
+Esta guía está diseñada para sitios web estáticos o dinámicos generados con JavaScript (Vanilla), enfocada en maximizar la visibilidad en buscadores sin necesidad de servidores complejos.
+
+## 1. HTML Semántico (La Base del SEO)
+
+Los motores de búsqueda "leen" la estructura de tu código. No uses `<div>` para todo.
+
+*   **`<main>`**: Úsalo UNA vez por página para el contenido principal.
+*   **`<header>` y `<footer>`**: Para cabecera y pie de página.
+*   **`<nav>`**: Exclusivo para menús de navegación principales.
+*   **`<article>`**: Para contenido independiente (noticias, posts, productos).
+*   **`<section>`**: Para agrupar temáticas con un título.
+*   **Jerarquía `H1` - `H6`**:
+    *   SÓLO un `<h1>` por página (el título principal).
+    *   Usa `<h2>` para secciones principales y `<h3>` para sub-secciones. Nunca saltes niveles (de h2 a h4).
+
+## 2. Metaeiquetas Esenciales (`<head>`)
+
+Cada archivo [.html](file:///c:/Users/Manuel/Desktop/testweb/test.html) debe tener esto configurado de forma única:
+
+```html
+<!-- Título: 50-60 caracteres. Incluye la palabra clave principal al inicio -->
+<title>Zapatillas Deportivas en Oferta | Mi Tienda</title>
+
+<!-- Descripción: 150-160 caracteres. Es el texto que sale en Google. Debe invitar al clic -->
+<meta name="description" content="Descubre las mejores zapatillas deportivas baratas. Envíos en 24h y devoluciones gratis. ¡Compra ahora!">
+
+<!-- Viewport: CRÍTICO para SEO Móvil -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- Canonical: Evita contenido duplicado (si tienes www y sin www) -->
+<link rel="canonical" href="https://miweb.com/producto" />
+```
+
+## 3. SEO para Sitios JavaScript (SPA / Dinámicos)
+
+Si tu web carga contenido con JS (como tu catálogo de productos):
+
+*   **GoogleRenderiza JS:** Googlebot *puede* ejecutar JavaScript, pero tarda más.
+*   **Enlaces Rastreables:** Google sigue enlaces `<a>` con atributo `href`.
+    *   ✅ BIEN: `<a href="/producto/123">Ver Producto</a>`
+    *   ❌ MAL: `<div onclick="irAProducto(123)">Ver Producto</div>` (Google NO sigue onclicks).
+*   **Contenido Inicial:** Intenta que el H1 y el texto principal estén en el HTML estático si es posible, o usa un "Skeleton/Placeholder" rápido.
+
+## 4. Performance (Core Web Vitals)
+
+La velocidad es un factor de ranking directo.
+
+*   **Imágenes:**
+    *   Siempre usa `alt="descripción"`.
+    *   Usa formatos modernos: `.webp` o `.svg`.
+    *   Usa `loading="lazy"` en imágenes que no están en la pantalla inicial:
+        ```html
+        <img src="foto.webp" alt="Foto descriptiva" loading="lazy" width="800" height="600">
+        ```
+    *   **IMPORTANTE:** Siempre define `width` y `height` para evitar **CLS** (Cumulative Layout Shift - que la web "salte" mientras carga).
+
+## 5. SEO Social (Open Graph)
+
+Para que tus links se vean bonitos en WhatsApp, Facebook y LinkedIn:
+
+```html
+<meta property="og:title" content="Título de mi Web">
+<meta property="og:description" content="Descripción corta para redes.">
+<meta property="og:image" content="https://miweb.com/img/portada.jpg">
+<meta property="og:url" content="https://miweb.com/">
+<meta property="og:type" content="website">
+```
+
+## 6. Archivos Técnicos
+
+*   **robots.txt:** Dice a Google qué NO rastrear (ej: panel de admin).
+*   **sitemap.xml:** Lista de todas tus páginas públicas. Genéralo si tienes muchas páginas.
+
+---
+**Resumen Checklist:**
+1. [ ] ¿Tengo un solo H1?
+2. [ ] ¿Tengo title y description únicos?
+3. [ ] ¿Mis imágenes tienen atributo alt?
+4. [ ] ¿Mi web carga rápido en móvil (Lighthouse > 90)?
+5. [ ] ¿Uso enlaces `<a>` reales para navegar?

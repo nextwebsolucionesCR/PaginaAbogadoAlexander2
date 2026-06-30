@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title data-i18n="page_title_services">Catálogo Legal | Alexander</title>
+  <meta name="description" content="Servicios legales y notariales detallados.">
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Merriweather:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="css/styles.css?v=2.0">
+</head>
+<body>
+
+  <!-- Minimal Header -->
+  <header class="header">
+    <div class="container header__inner">
+      <a href="index.html" class="logo">ALEXANDER.</a>
+      
+      <div class="header__actions">
+        <nav class="nav">
+          <button id="menu-toggle" class="menu-toggle-btn" aria-label="Abrir menú">☰</button>
+          <div class="nav__menu" id="nav-menu">
+            <a href="index.html" class="nav__link" data-i18n="nav_home">Inicio</a>
+            <a href="servicios.html" class="nav__link" data-i18n="nav_services" style="color: var(--accent-color);">Servicios</a>
+            <a href="index.html#contacto" class="nav__link" data-i18n="nav_contact">Contacto</a>
+          </div>
+        </nav>
+
+        <select id="lang-select" class="lang-select">
+          <option value="es">ES</option>
+          <option value="en">EN</option>
+          <option value="fr">FR</option>
+          <option value="pt">PT</option>
+          <option value="zh">ZH</option>
+        </select>
+        <button id="theme-toggle" class="icon-btn">☾</button>
+      </div>
+    </div>
+  </header>
+
+  <main style="padding-top: 150px; min-height: 100vh;">
+    <section class="container">
+      <span class="text-accent" data-i18n="svc_page_subtitle">Práctica Profesional</span>
+      <h1 class="heading-massive" style="margin-bottom: var(--spacing-xl);" data-i18n="svc_page_title">Especialidades.</h1>
+      
+      <!-- Minimalist Filters -->
+      <div style="margin-bottom: var(--spacing-lg); display: flex; gap: var(--spacing-md); border-bottom: 1px solid var(--text-dark); padding-bottom: var(--spacing-sm); overflow-x: auto; white-space: nowrap;">
+        <button class="filter-btn text-lead" data-filter="all" style="background:none; border:none; color:inherit; cursor:pointer; opacity: 1;" data-i18n="filter_all">Todos</button>
+        <button class="filter-btn text-lead" data-filter="notarial" style="background:none; border:none; color:inherit; cursor:pointer; opacity: 0.5;" data-i18n="filter_notarial">Notarial</button>
+        <button class="filter-btn text-lead" data-filter="civil" style="background:none; border:none; color:inherit; cursor:pointer; opacity: 0.5;" data-i18n="filter_civil">Civil & Contratos</button>
+        <button class="filter-btn text-lead" data-filter="familia" style="background:none; border:none; color:inherit; cursor:pointer; opacity: 0.5;" data-i18n="filter_family">Familia</button>
+        <button class="filter-btn text-lead" data-filter="corporativo" style="background:none; border:none; color:inherit; cursor:pointer; opacity: 0.5;" data-i18n="filter_corp">Corporativo</button>
+      </div>
+
+      <!-- Bespoke List (No cards) -->
+      <div class="services-list" id="services-grid">
+        
+        <!-- Service Item -->
+        <div class="service-row" data-category="notarial" style="display: flex; flex-direction: column; gap: var(--spacing-sm); padding: var(--spacing-md) 0; border-bottom: 1px solid var(--primary-color);">
+          <div style="display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: var(--spacing-md);">
+            <h2 class="heading-large" style="margin:0;" data-i18n="cat_notarial_1_title">Traspasos Inmobiliarios</h2>
+            <span class="text-accent" data-i18n="filter_notarial">Notarial</span>
+          </div>
+          <div style="display: grid; grid-template-columns: 1fr; gap: var(--spacing-md); margin-top: var(--spacing-sm);">
+            <p class="text-lead" data-i18n="cat_notarial_1_desc">Gestión integral para la transferencia legal de bienes inmuebles y vehículos, asegurando que su inversión quede blindada jurídicamente.</p>
+            <a href="https://wa.me/50671990701" class="btn-editorial" style="justify-self: start;" data-i18n="cat_notarial_1_btn">Iniciar trámite</a>
+          </div>
+        </div>
+
+        <div class="service-row" data-category="notarial" style="display: flex; flex-direction: column; gap: var(--spacing-sm); padding: var(--spacing-md) 0; border-bottom: 1px solid var(--primary-color);">
+          <div style="display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: var(--spacing-md);">
+            <h2 class="heading-large" style="margin:0;" data-i18n="cat_notarial_2_title">Escrituras Públicas</h2>
+            <span class="text-accent" data-i18n="filter_notarial">Notarial</span>
+          </div>
+          <div style="display: grid; grid-template-columns: 1fr; gap: var(--spacing-md); margin-top: var(--spacing-sm);">
+            <p class="text-lead" data-i18n="cat_notarial_2_desc">Redacción impecable de escrituras, protocolizaciones y poderes adaptados a la voluntad de las partes con absoluto rigor legal.</p>
+            <a href="https://wa.me/50671990701" class="btn-editorial" style="justify-self: start;" data-i18n="cat_notarial_2_btn">Agendar cita</a>
+          </div>
+        </div>
+
+        <div class="service-row" data-category="civil" style="display: flex; flex-direction: column; gap: var(--spacing-sm); padding: var(--spacing-md) 0; border-bottom: 1px solid var(--primary-color);">
+          <div style="display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: var(--spacing-md);">
+            <h2 class="heading-large" style="margin:0;" data-i18n="cat_civil_1_title">Ingeniería de Contratos</h2>
+            <span class="text-accent" data-i18n="filter_civil">Civil</span>
+          </div>
+          <div style="display: grid; grid-template-columns: 1fr; gap: var(--spacing-md); margin-top: var(--spacing-sm);">
+            <p class="text-lead" data-i18n="cat_civil_1_desc">Diseño, análisis profundo y negociación estratégica de cláusulas contractuales para prevenir litigios futuros.</p>
+            <a href="https://wa.me/50671990701" class="btn-editorial" style="justify-self: start;" data-i18n="cat_civil_1_btn">Consultar caso</a>
+          </div>
+        </div>
+        
+        <div class="service-row" data-category="familia" style="display: flex; flex-direction: column; gap: var(--spacing-sm); padding: var(--spacing-md) 0; border-bottom: 1px solid var(--primary-color);">
+          <div style="display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: var(--spacing-md);">
+            <h2 class="heading-large" style="margin:0;" data-i18n="cat_family_1_title">Procesos Sucesorios</h2>
+            <span class="text-accent" data-i18n="filter_family">Familia</span>
+          </div>
+          <div style="display: grid; grid-template-columns: 1fr; gap: var(--spacing-md); margin-top: var(--spacing-sm);">
+            <p class="text-lead" data-i18n="cat_family_1_desc">Acompañamiento respetuoso y eficiente en la distribución de herencias y resolución de conflictos sucesorios intrafamiliares.</p>
+            <a href="https://wa.me/50671990701" class="btn-editorial" style="justify-self: start;" data-i18n="cat_family_1_btn">Recibir apoyo</a>
+          </div>
+        </div>
+
+        <div class="service-row" data-category="corporativo" style="display: flex; flex-direction: column; gap: var(--spacing-sm); padding: var(--spacing-md) 0; border-bottom: 1px solid var(--primary-color);">
+          <div style="display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: var(--spacing-md);">
+            <h2 class="heading-large" style="margin:0;">Estructuración Empresarial</h2>
+            <span class="text-accent">Corporativo</span>
+          </div>
+          <div style="display: grid; grid-template-columns: 1fr; gap: var(--spacing-md); margin-top: var(--spacing-sm);">
+            <p class="text-lead">Constitución de sociedades anónimas, asesoría para startups y auditoría de normativas laborales corporativas.</p>
+            <a href="https://wa.me/50671990701" class="btn-editorial" style="justify-self: start;">Asesoría empresarial</a>
+          </div>
+        </div>
+
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__grid">
+        <div class="footer__brand">
+          <h2 class="logo" style="margin-bottom: var(--spacing-sm);">ALEXANDER.</h2>
+          <p style="opacity: 0.7;" data-i18n="footer_desc">Acompañamiento legal preventivo y resolutivo. Protegiendo sus intereses con la mayor ética profesional.</p>
+        </div>
+        
+        <div class="footer__links">
+          <h3 class="text-accent" style="margin-bottom: var(--spacing-sm);" data-i18n="footer_nav">Navegación</h3>
+          <ul>
+            <li><a href="index.html" data-i18n="nav_home">Inicio</a></li>
+            <li><a href="servicios.html" data-i18n="nav_services">Servicios</a></li>
+            <li><a href="index.html#contacto" data-i18n="nav_contact">Contacto</a></li>
+          </ul>
+        </div>
+        
+        <div class="footer__links">
+          <h3 class="text-accent" style="margin-bottom: var(--spacing-sm);" data-i18n="footer_legal">Legal</h3>
+          <ul>
+            <li><a href="#" data-i18n="footer_terms">Términos y Condiciones</a></li>
+            <li><a href="privacidad.html" data-i18n="footer_privacy">Política de Privacidad</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <p data-i18n="footer_copyright">&copy; 2026 Abogado Alexander. Todos los derechos reservados.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Cookies -->
+  <div id="cookies-editorial" class="cookies-editorial">
+    <p style="margin: 0;" data-i18n="cookies_text">Utilizamos cookies para garantizar la mejor experiencia. ¿Continuamos?</p>
+    <div class="cookies-actions">
+      <button id="btn-accept" class="btn-cookie" data-i18n="cookies_accept">Aceptar</button>
+      <button id="btn-reject" class="btn-cookie" style="opacity: 0.5; border-color: transparent;" data-i18n="cookies_reject">Rechazar</button>
+    </div>
+  </div>
+
+  <script src="js/translations.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>

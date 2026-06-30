@@ -1,0 +1,979 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Formulario de Contacto - Prueba EmailJS</title>
+    <style>
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        font-family: "Arial", "Segoe UI", sans-serif;
+        line-height: 1.6;
+        color: #333;
+        background: linear-gradient(135deg, #f4f4f4 0%, #e3f2fd 100%);
+        padding: 20px;
+        min-height: 100vh;
+      }
+      .container {
+        max-width: 680px;
+        margin: 0 auto;
+        background: white;
+        padding: 40px;
+        border-radius: 16px;
+        box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+      }
+      h1 {
+        text-align: center;
+        margin-bottom: 35px;
+        color: #2c3e50;
+        font-size: 2.5rem;
+        font-weight: 700;
+      }
+      .form-group {
+        margin-bottom: 25px;
+        position: relative;
+      }
+      label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: 600;
+        color: #34495e;
+        font-size: 1rem;
+      }
+      .required::after {
+        content: " *";
+        color: #e74c3c;
+        font-weight: bold;
+      }
+      input,
+      select,
+      textarea {
+        width: 100%;
+        padding: 14px 16px;
+        border: 2px solid #dfe6e9;
+        border-radius: 8px;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+        background-color: #f8f9fa;
+      }
+      input:focus,
+      select:focus,
+      textarea:focus {
+        outline: none;
+        border-color: #3498db;
+        background-color: white;
+        box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+      }
+      input.invalid,
+      select.invalid,
+      textarea.invalid {
+        border-color: #e74c3c;
+        background-color: #fff9f9;
+      }
+      input.valid,
+      select.valid,
+      textarea.valid {
+        border-color: #2ecc71;
+      }
+      textarea {
+        min-height: 140px;
+        resize: vertical;
+      }
+      .field-error {
+        display: block;
+        margin-top: 6px;
+        color: #e74c3c;
+        font-size: 0.875rem;
+        min-height: 20px;
+      }
+      .field-error.hidden {
+        visibility: hidden;
+        opacity: 0;
+      }
+      .honeypot {
+        display: none;
+        position: absolute;
+        left: -9999px;
+      }
+      .form-status {
+        margin-top: 20px;
+        padding: 16px;
+        border-radius: 8px;
+        text-align: center;
+        font-weight: 600;
+        transition: all 0.3s ease;
+      }
+      .form-status.error {
+        background: linear-gradient(135deg, #ffe6e6 0%, #ffcccc 100%);
+        border: 2px solid #ff9999;
+        color: #c0392b;
+      }
+      .form-status.success {
+        background: linear-gradient(135deg, #e6ffe6 0%, #ccffcc 100%);
+        border: 2px solid #99ff99;
+        color: #27ae60;
+      }
+      button[type="submit"] {
+        background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+        color: white;
+        border: none;
+        padding: 18px 24px;
+        font-size: 1.1rem;
+        border-radius: 10px;
+        cursor: pointer;
+        width: 100%;
+        transition: all 0.3s ease;
+        font-weight: 600;
+        letter-spacing: 0.5px;
+        box-shadow: 0 4px 12px rgba(52, 152, 219, 0.3);
+      }
+      button[type="submit"]:hover:not(:disabled) {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 16px rgba(52, 152, 219, 0.4);
+        background: linear-gradient(135deg, #2980b9 0%, #2573a6 100%);
+      }
+      button[type="submit"]:active:not(:disabled) {
+        transform: translateY(0);
+      }
+      button[type="submit"]:disabled {
+        background: #95a5a6;
+        cursor: not-allowed;
+        box-shadow: none;
+        transform: none !important;
+      }
+      .fa-spinner {
+        margin-left: 10px;
+      }
+      .g-recaptcha {
+        margin: 25px 0;
+        display: flex;
+        justify-content: center;
+      }
+      .instructions {
+        background: #f0f8ff;
+        padding: 20px;
+        border-left: 6px solid #3498db;
+        margin-bottom: 30px;
+        font-size: 0.95rem;
+        border-radius: 8px;
+      }
+      .instructions h3 {
+        margin-bottom: 12px;
+        color: #2c3e50;
+        font-size: 1.2rem;
+      }
+      .instructions ol {
+        margin-left: 24px;
+      }
+      .instructions li {
+        margin-bottom: 10px;
+        line-height: 1.5;
+      }
+      /* Responsive */
+      @media (max-width: 768px) {
+        body {
+          padding: 15px;
+        }
+        .container {
+          padding: 25px;
+          border-radius: 12px;
+        }
+        h1 {
+          font-size: 2rem;
+          margin-bottom: 25px;
+        }
+        input,
+        select,
+        textarea {
+          padding: 12px 14px;
+          font-size: 16px; /* Previene zoom en iOS */
+        }
+        button[type="submit"] {
+          padding: 16px 20px;
+          font-size: 1rem;
+        }
+      }
+      @media (max-width: 480px) {
+        .container {
+          padding: 20px;
+        }
+        h1 {
+          font-size: 1.75rem;
+        }
+      }
+    </style>
+    <!-- Cargar SDK de EmailJS -->
+    <script
+      type="text/javascript"
+      src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"
+    ></script>
+    <!-- Font Awesome para el spinner -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+  </head>
+  <body>
+    <div class="container" role="main">
+      <h1 id="main-title">Formulario de Contacto</h1>
+
+      <div
+        class="instructions"
+        role="region"
+        aria-labelledby="instructions-title"
+      >
+        <h3 id="instructions-title">📋 Para probar este formulario:</h3>
+        <ol>
+          <li>
+            <strong>Reemplaza estos datos en el código:</strong>
+            <ul>
+              <li>
+                <code>data-public-key="TU_PUBLIC_KEY"</code> → Tu Public Key de
+                EmailJS
+              </li>
+              <li>
+                <code>data-service-id="TU_SERVICE_ID"</code> → Tu Service ID de
+                EmailJS
+              </li>
+              <li>
+                <code>data-template-id="TU_TEMPLATE_ID"</code> → Tu Template ID
+                de EmailJS
+              </li>
+            </ul>
+          </li>
+          <li>
+            <strong>Configura reCAPTCHA en EmailJS:</strong>
+            <ul>
+              <li>Ve a EmailJS → Email Templates → Settings</li>
+              <li>Activa "Enable reCAPTCHA"</li>
+              <li>
+                Pega tu Secret Key:
+                <code>6LeOskQsAAAAACyuV57v4YzyBShOuUhT44n-yoTN</code>
+              </li>
+            </ul>
+          </li>
+        </ol>
+      </div>
+
+      <form
+        id="contact-form"
+        data-public-key="apu-wdFsQWg62VI9X"
+        data-service-id="service_uckijmk"
+        data-template-id="template_5ejnl01"
+        novalidate
+        aria-label="Formulario de contacto"
+      >
+        <!-- Campo Honeypot (oculto para usuarios, visible para bots) -->
+        <div class="form-group honeypot">
+          <label for="company_website">Sitio web (no llenar)</label>
+          <input
+            type="text"
+            id="company_website"
+            name="company_website"
+            tabindex="-1"
+            autocomplete="off"
+            aria-hidden="true"
+          />
+        </div>
+
+        <!-- Campos del formulario -->
+        <div class="form-group">
+          <label for="user_name" class="required">Nombre completo</label>
+          <input
+            type="text"
+            id="user_name"
+            name="user_name"
+            placeholder="Tu nombre completo"
+            required
+            aria-required="true"
+            aria-describedby="name-error"
+          />
+          <span
+            id="name-error"
+            class="field-error hidden"
+            role="alert"
+            aria-live="polite"
+          ></span>
+        </div>
+
+        <div class="form-group">
+          <label for="user_email" class="required">Correo electrónico</label>
+          <input
+            type="email"
+            id="user_email"
+            name="user_email"
+            placeholder="tu@email.com"
+            required
+            aria-required="true"
+            aria-describedby="email-error"
+          />
+          <span
+            id="email-error"
+            class="field-error hidden"
+            role="alert"
+            aria-live="polite"
+          ></span>
+        </div>
+
+        <div class="form-group">
+          <label for="user_phone">Teléfono (Costa Rica)</label>
+          <input
+            type="tel"
+            id="user_phone"
+            name="user_phone"
+            placeholder="88887777 o +50688887777"
+            aria-describedby="phone-error"
+          />
+          <span
+            id="phone-error"
+            class="field-error hidden"
+            role="alert"
+            aria-live="polite"
+          ></span>
+        </div>
+
+        <div class="form-group">
+          <label for="user_budget">💰 Dinero disponible (presupuesto)</label>
+          <input
+            type="text"
+            id="user_budget"
+            name="user_budget"
+            placeholder="Ej: $5000 o 'Por definir'"
+            aria-describedby="budget-error"
+          />
+          <span
+            id="budget-error"
+            class="field-error hidden"
+            role="alert"
+            aria-live="polite"
+          ></span>
+        </div>
+
+        <div class="form-group">
+          <label for="user_service">🏢 Servicio consultado</label>
+          <select
+            id="user_service"
+            name="user_service"
+            aria-describedby="service-error"
+          >
+            <option value="">Selecciona un servicio</option>
+            <option value="Desarrollo Web">Desarrollo Web</option>
+            <option value="Marketing Digital">Marketing Digital</option>
+            <option value="Consultoría">Consultoría</option>
+            <option value="Diseño Gráfico">Diseño Gráfico</option>
+            <option value="Otro">Otro</option>
+          </select>
+          <span
+            id="service-error"
+            class="field-error hidden"
+            role="alert"
+            aria-live="polite"
+          ></span>
+        </div>
+
+        <div class="form-group">
+          <label for="message" class="required">Mensaje</label>
+          <textarea
+            id="message"
+            name="message"
+            placeholder="Escribe tu mensaje aquí..."
+            required
+            aria-required="true"
+            aria-describedby="message-error"
+          ></textarea>
+          <span
+            id="message-error"
+            class="field-error hidden"
+            role="alert"
+            aria-live="polite"
+          ></span>
+        </div>
+
+        <!-- Widget reCAPTCHA -->
+        <div
+          class="g-recaptcha"
+          data-sitekey="6LektkQsAAAAAGE4WDpedpsdXY696Xqx4L2lbJYh"
+          data-callback="onRecaptchaSuccess"
+          data-expired-callback="onRecaptchaExpired"
+        ></div>
+
+        <!-- Botón de envío -->
+        <button
+          type="submit"
+          id="submit-btn"
+          aria-label="Enviar mensaje del formulario"
+        >
+          <i class="fas fa-paper-plane" aria-hidden="true"></i> Enviar mensaje
+        </button>
+
+        <!-- Área de estado -->
+        <div
+          id="form-status"
+          class="form-status"
+          role="alert"
+          aria-live="assertive"
+        ></div>
+      </form>
+    </div>
+
+    <!-- Cargar reCAPTCHA de Google -->
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+
+    <!-- Tu código JavaScript COMPLETO -->
+    <script>
+      const form = document.getElementById("contact-form");
+      if (!form || !window.emailjs) {
+        console.error("Formulario o EmailJS no encontrado");
+        const statusEl = document.getElementById("form-status");
+        if (statusEl) {
+          statusEl.textContent = "Error: EmailJS no está cargado.";
+          statusEl.classList.add("error");
+        }
+      }
+
+      /* =========================
+           CONFIG: Activa/Desactiva
+           ========================= */
+      const RULES = {
+        // Anti-spam
+        ENABLE_RECAPTCHA: true,
+        ENABLE_HONEYPOT: true,
+        ENABLE_COOLDOWN: true,
+        COOLDOWN_MS: 30000,
+
+        // Validaciones de campos
+        ENABLE_TRIM_NORMALIZE: true,
+        ENABLE_NAME_VALIDATION: true,
+        NAME_MIN: 3,
+        NAME_MAX: 80,
+
+        ENABLE_EMAIL_VALIDATION: true,
+        EMAIL_MAX: 120,
+
+        ENABLE_PHONE_VALIDATION: true,
+        PHONE_MAX: 20,
+
+        ENABLE_BUDGET_VALIDATION: true,
+        BUDGET_MIN: 2,
+        BUDGET_MAX: 50,
+
+        ENABLE_SERVICE_VALIDATION: true,
+        ALLOWED_SERVICES: [
+          "",
+          "Desarrollo Web",
+          "Marketing Digital",
+          "Consultoría",
+          "Diseño Gráfico",
+          "Otro",
+        ],
+
+        ENABLE_MESSAGE_VALIDATION: true,
+        MESSAGE_MIN: 15,
+        MESSAGE_MAX: 1200,
+
+        // Anti-spam de contenido
+        ENABLE_BLOCK_LINKS: true,
+        ENABLE_BLOCK_REPEATS: true,
+        ENABLE_BLOCK_TOO_MANY_SYMBOLS: true,
+
+        // Modo debug (mostrar errores detallados)
+        DEBUG_MODE: false, // Cambiar a true solo para desarrollo
+      };
+
+      /* =========================
+           Helpers
+           ========================= */
+      function setStatus(el, msg, color = "#333", isPersistent = false) {
+        if (!el) return;
+        el.textContent = msg;
+        el.style.color = color;
+        el.className = "form-status";
+        el.setAttribute("aria-live", isPersistent ? "assertive" : "polite");
+
+        if (color === "red") el.classList.add("error");
+        if (color === "green") el.classList.add("success");
+
+        // Enfocar el estado para lectores de pantalla
+        if (msg) {
+          el.focus();
+        }
+      }
+
+      function setFieldError(fieldId, message = "") {
+        const errorEl = document.getElementById(`${fieldId}-error`);
+        const inputEl = document.getElementById(fieldId);
+
+        if (!errorEl || !inputEl) return;
+
+        if (message) {
+          errorEl.textContent = message;
+          errorEl.classList.remove("hidden");
+          inputEl.classList.add("invalid");
+          inputEl.classList.remove("valid");
+          inputEl.setAttribute("aria-invalid", "true");
+        } else {
+          errorEl.textContent = "";
+          errorEl.classList.add("hidden");
+          inputEl.classList.remove("invalid");
+          inputEl.classList.add("valid");
+          inputEl.setAttribute("aria-invalid", "false");
+        }
+      }
+
+      function normalizeSpaces(str) {
+        return String(str || "")
+          .replace(/\s+/g, " ")
+          .trim();
+      }
+
+      function isValidEmail(email) {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+        return emailRegex.test(String(email).trim());
+      }
+
+      function normalizePhone(phone) {
+        return String(phone || "")
+          .replace(/[^\d+]/g, "")
+          .trim();
+      }
+
+      function hasSpamPatterns(text) {
+        const t = String(text || "");
+
+        if (RULES.ENABLE_BLOCK_LINKS && /(https?:\/\/|www\.)/i.test(t))
+          return true;
+        if (RULES.ENABLE_BLOCK_REPEATS && /([a-z0-9!?.])\1{7,}/i.test(t))
+          return true;
+
+        if (RULES.ENABLE_BLOCK_TOO_MANY_SYMBOLS) {
+          const nonWord = (t.match(/[^a-z0-9áéíóúüñ\s.,;:!?()"'-]/gi) || [])
+            .length;
+          if (nonWord > 15) return true;
+        }
+        return false;
+      }
+
+      /* =========================
+           Validaciones en Tiempo Real
+           ========================= */
+      function setupRealTimeValidation() {
+        const fields = [
+          { id: "user_name", validator: validateName },
+          { id: "user_email", validator: validateEmail },
+          { id: "user_phone", validator: validatePhone },
+          { id: "user_budget", validator: validateBudget },
+          { id: "user_service", validator: validateService },
+          { id: "message", validator: validateMessage },
+        ];
+
+        fields.forEach((field) => {
+          const el = document.getElementById(field.id);
+          if (el) {
+            // Validar al perder el foco (blur)
+            el.addEventListener("blur", () => {
+              if (el.value.trim()) {
+                field.validator(el.value, field.id);
+              } else {
+                setFieldError(field.id);
+              }
+            });
+
+            // Limpiar error al empezar a escribir
+            el.addEventListener("input", () => {
+              if (el.classList.contains("invalid")) {
+                setFieldError(field.id);
+              }
+            });
+          }
+        });
+      }
+
+      function validateName(value, fieldId = "user_name") {
+        if (!value.trim()) {
+          setFieldError(fieldId, "El nombre es requerido.");
+          return false;
+        }
+        if (value.length < RULES.NAME_MIN) {
+          setFieldError(
+            fieldId,
+            `El nombre debe tener al menos ${RULES.NAME_MIN} caracteres.`
+          );
+          return false;
+        }
+        if (value.length > RULES.NAME_MAX) {
+          setFieldError(
+            fieldId,
+            `El nombre no debe exceder ${RULES.NAME_MAX} caracteres.`
+          );
+          return false;
+        }
+        if (!/^[a-záéíóúüñ\s.'-]+$/i.test(value)) {
+          setFieldError(
+            fieldId,
+            "Solo se permiten letras, espacios y algunos caracteres especiales."
+          );
+          return false;
+        }
+        setFieldError(fieldId);
+        return true;
+      }
+
+      function validateEmail(value, fieldId = "user_email") {
+        if (!value.trim()) {
+          setFieldError(fieldId, "El correo electrónico es requerido.");
+          return false;
+        }
+        if (value.length > RULES.EMAIL_MAX) {
+          setFieldError(
+            fieldId,
+            `El correo no debe exceder ${RULES.EMAIL_MAX} caracteres.`
+          );
+          return false;
+        }
+        if (!isValidEmail(value)) {
+          setFieldError(
+            fieldId,
+            "Por favor ingresa un correo electrónico válido."
+          );
+          return false;
+        }
+        setFieldError(fieldId);
+        return true;
+      }
+
+      function validatePhone(value, fieldId = "user_phone") {
+        if (!value.trim()) {
+          setFieldError(fieldId);
+          return true; // Opcional
+        }
+
+        if (value.length > RULES.PHONE_MAX) {
+          setFieldError(fieldId, "El teléfono es demasiado largo.");
+          return false;
+        }
+
+        const cleanPhone = normalizePhone(value);
+        const digits = cleanPhone.replace(/\D/g, "");
+        const isCR8 = digits.length === 8;
+        const isCRPlus506 =
+          cleanPhone.startsWith("+506") && digits.length === 11;
+
+        if (!(isCR8 || isCRPlus506)) {
+          setFieldError(
+            fieldId,
+            "Formato inválido. Usa 8 dígitos o +506 seguido de 8 dígitos."
+          );
+          return false;
+        }
+
+        setFieldError(fieldId);
+        return true;
+      }
+
+      function validateBudget(value, fieldId = "user_budget") {
+        if (!value.trim()) {
+          setFieldError(fieldId);
+          return true; // Opcional
+        }
+
+        if (value.length < RULES.BUDGET_MIN) {
+          setFieldError(
+            fieldId,
+            "Por favor proporciona más detalles sobre el presupuesto."
+          );
+          return false;
+        }
+        if (value.length > RULES.BUDGET_MAX) {
+          setFieldError(
+            fieldId,
+            "La descripción del presupuesto es demasiado larga."
+          );
+          return false;
+        }
+
+        setFieldError(fieldId);
+        return true;
+      }
+
+      function validateService(value, fieldId = "user_service") {
+        if (value && !RULES.ALLOWED_SERVICES.includes(value)) {
+          setFieldError(
+            fieldId,
+            "Por favor selecciona una opción válida de la lista."
+          );
+          return false;
+        }
+
+        setFieldError(fieldId);
+        return true;
+      }
+
+      function validateMessage(value, fieldId = "message") {
+        if (!value.trim()) {
+          setFieldError(fieldId, "El mensaje es requerido.");
+          return false;
+        }
+        if (value.length < RULES.MESSAGE_MIN) {
+          setFieldError(
+            fieldId,
+            `El mensaje es muy corto. Mínimo ${RULES.MESSAGE_MIN} caracteres.`
+          );
+          return false;
+        }
+        if (value.length > RULES.MESSAGE_MAX) {
+          setFieldError(
+            fieldId,
+            `El mensaje es demasiado largo. Máximo ${RULES.MESSAGE_MAX} caracteres.`
+          );
+          return false;
+        }
+        if (hasSpamPatterns(value)) {
+          setFieldError(fieldId, "El mensaje contiene contenido no permitido.");
+          return false;
+        }
+
+        setFieldError(fieldId);
+        return true;
+      }
+
+      /* =========================
+           Callbacks reCAPTCHA
+           ========================= */
+      function onRecaptchaSuccess(token) {
+        console.log("reCAPTCHA verificado");
+      }
+
+      function onRecaptchaExpired() {
+        console.log("reCAPTCHA expirado");
+      }
+
+      /* =========================
+           Init EmailJS por cliente
+           ========================= */
+      emailjs.init(form.dataset.publicKey);
+
+      // Configurar validación en tiempo real
+      setupRealTimeValidation();
+
+      form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+
+        const btn = document.getElementById("submit-btn");
+        const status = document.getElementById("form-status");
+        const honeypot = document.getElementById("company_website");
+
+        const originalBtnHTML = btn ? btn.innerHTML : "";
+
+        /* =========================
+               1) Anti-spam: Honeypot
+               ========================= */
+        if (RULES.ENABLE_HONEYPOT && honeypot && honeypot.value.trim() !== "") {
+          console.log("Bot detectado por honeypot");
+          return;
+        }
+
+        /* =========================
+               2) Anti-spam: Cooldown
+               ========================= */
+        if (RULES.ENABLE_COOLDOWN) {
+          const last = Number(localStorage.getItem("nwcr_last_submit") || 0);
+          if (Date.now() - last < RULES.COOLDOWN_MS) {
+            const secondsLeft = Math.ceil(
+              (RULES.COOLDOWN_MS - (Date.now() - last)) / 1000
+            );
+            setStatus(
+              status,
+              `Por favor espera ${secondsLeft} segundos antes de enviar otro mensaje.`,
+              "red",
+              true
+            );
+            return;
+          }
+        }
+
+        // Capturar campos
+        const nameEl = form.querySelector('[name="user_name"]');
+        const emailEl = form.querySelector('[name="user_email"]');
+        const phoneEl = form.querySelector('[name="user_phone"]');
+        const budgetEl = form.querySelector('[name="user_budget"]');
+        const serviceEl = form.querySelector('[name="user_service"]');
+        const msgEl = form.querySelector('[name="message"]');
+
+        let user_name = nameEl?.value || "";
+        let user_email = emailEl?.value || "";
+        let user_phone = phoneEl?.value || "";
+        let user_budget = budgetEl?.value || "";
+        let user_service = serviceEl?.value || "";
+        let message = msgEl?.value || "";
+
+        /* =========================
+               3) Normalización
+               ========================= */
+        if (RULES.ENABLE_TRIM_NORMALIZE) {
+          user_name = normalizeSpaces(user_name);
+          user_email = normalizeSpaces(user_email).toLowerCase();
+          user_budget = normalizeSpaces(user_budget);
+          user_service = normalizeSpaces(user_service);
+          message = normalizeSpaces(message);
+          user_phone = normalizePhone(user_phone);
+          if (phoneEl) phoneEl.value = user_phone;
+        }
+
+        /* =========================
+               4) Validación completa
+               ========================= */
+        let isValid = true;
+
+        isValid = validateName(user_name) && isValid;
+        isValid = validateEmail(user_email) && isValid;
+        isValid = validatePhone(user_phone) && isValid;
+        isValid = validateBudget(user_budget) && isValid;
+        isValid = validateService(user_service) && isValid;
+        isValid = validateMessage(message) && isValid;
+
+        if (!isValid) {
+          setStatus(
+            status,
+            "Por favor corrige los errores en el formulario.",
+            "red",
+            true
+          );
+          // Enfocar el primer campo con error
+          const firstError = form.querySelector(".invalid");
+          if (firstError) {
+            firstError.focus();
+          }
+          return;
+        }
+
+        /* =========================
+               5) Validación reCAPTCHA
+               ========================= */
+        if (RULES.ENABLE_RECAPTCHA) {
+          if (
+            typeof grecaptcha === "undefined" ||
+            typeof grecaptcha.getResponse !== "function"
+          ) {
+            setStatus(
+              status,
+              "Error de seguridad: no se pudo verificar reCAPTCHA. Por favor recarga la página.",
+              "red",
+              true
+            );
+            if (btn) {
+              btn.disabled = false;
+              btn.innerHTML = originalBtnHTML;
+            }
+            return;
+          }
+
+          const recaptchaResponse = grecaptcha.getResponse();
+          if (!recaptchaResponse || recaptchaResponse.length === 0) {
+            setStatus(
+              status,
+              "Por favor, verifica que no eres un robot.",
+              "red",
+              true
+            );
+            if (btn) {
+              btn.disabled = false;
+              btn.innerHTML = originalBtnHTML;
+            }
+            return;
+          }
+        }
+
+        /* =========================
+               6) Envío EmailJS
+               ========================= */
+        if (btn) {
+          btn.disabled = true;
+          btn.innerHTML = 'Enviando... <i class="fas fa-spinner fa-spin"></i>';
+          btn.setAttribute("aria-label", "Enviando mensaje, por favor espera");
+        }
+
+        if (status) {
+          setStatus(status, "Enviando tu mensaje...", "#3498db", false);
+        }
+
+        try {
+          await emailjs.sendForm(
+            form.dataset.serviceId,
+            form.dataset.templateId,
+            form
+          );
+
+          setStatus(
+            status,
+            "✅ ¡Mensaje enviado correctamente! Te responderemos pronto.",
+            "green",
+            true
+          );
+          form.reset();
+
+          // Limpiar clases de validación
+          form.querySelectorAll(".valid, .invalid").forEach((el) => {
+            el.classList.remove("valid", "invalid");
+            el.setAttribute("aria-invalid", "false");
+          });
+
+          if (RULES.ENABLE_COOLDOWN) {
+            localStorage.setItem("nwcr_last_submit", String(Date.now()));
+          }
+        } catch (error) {
+          console.error("Error EmailJS:", error);
+
+          let errorMessage =
+            "❌ Error al enviar el mensaje. Por favor intenta de nuevo.";
+
+          if (RULES.DEBUG_MODE) {
+            // Solo mostrar detalles en modo desarrollo
+            if (error.text) {
+              errorMessage = `❌ Error: ${error.text}`;
+            } else if (error.message) {
+              errorMessage = `❌ Error: ${error.message}`;
+            }
+          } else {
+            // Mensajes amigables para producción
+            if (error.status === 400) {
+              errorMessage =
+                "❌ Error en la configuración. Por favor contacta al administrador.";
+            } else if (
+              error.status === 0 ||
+              error.message?.includes("Network")
+            ) {
+              errorMessage =
+                "❌ Error de conexión. Verifica tu internet e intenta de nuevo.";
+            }
+          }
+
+          setStatus(status, errorMessage, "red", true);
+        } finally {
+          // Resetear reCAPTCHA
+          if (
+            RULES.ENABLE_RECAPTCHA &&
+            typeof grecaptcha !== "undefined" &&
+            grecaptcha.reset
+          ) {
+            grecaptcha.reset();
+          }
+
+          if (btn) {
+            btn.disabled = false;
+            btn.innerHTML = originalBtnHTML || "Enviar";
+            btn.setAttribute("aria-label", "Enviar mensaje del formulario");
+          }
+        }
+      });
+
+      // Inicializar validación de campos
+      document.addEventListener("DOMContentLoaded", () => {
+        setupRealTimeValidation();
+      });
+    </script>
+  </body>
+</html>

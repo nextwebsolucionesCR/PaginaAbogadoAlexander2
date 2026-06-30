@@ -1,0 +1,235 @@
+REGLAS GLOBALES OBLIGATORIAS DEL PROYECTO
+
+
+================================================================
+LECTURA OBLIGATORIA ANTES DE DESARROLLAR
+================================================================
+
+Este archivo DEBE ser leído COMPLETAMENTE antes de:
+- crear nuevos archivos
+- modificar archivos existentes
+- agregar secciones
+- ajustar estilos
+- implementar componentes
+- continuar el desarrollo con otro agente o modelo
+
+Las reglas aquí definidas tienen PRIORIDAD ABSOLUTA
+sobre cualquier decisión visual, estructural o técnica
+que el agente intente tomar por cuenta propia.
+
+================================================================
+CONTINUIDAD ENTRE AGENTES (MUY IMPORTANTE)
+================================================================
+
+Este proyecto puede ser continuado por diferentes agentes
+(modelos, versiones gratuitas, versiones pro o sesiones nuevas).
+
+CUALQUIER agente que continúe el proyecto:
+- DEBE releer este archivo antes de continuar
+- DEBE reaplicar estas reglas como criterio permanente
+- NO debe asumir que reglas anteriores siguen en memoria
+
+Este archivo es la FUENTE ÚNICA DE VERDAD del proyecto.
+
+================================================================
+PRINCIPIO GENERAL DE RESPONSIVE DESIGN
+================================================================
+
+La página web debe ser completamente RESPONSIVE y adaptativa.
+
+REGLA CLAVE:
+La versión móvil NO debe ser una versión minimizada,
+reducida o simplemente reacomodada del diseño de desktop.
+
+Desktop, tablet y móvil deben considerarse
+EXPERIENCIAS DIFERENTES, optimizadas para cada pantalla.
+
+Cualquier cambio en desktop DEBE evaluarse
+automáticamente en tablet y móvil, y viceversa.
+
+================================================================
+VALIDACIÓN CONTRA TAMAÑOS DE PANTALLA REALES (OBLIGATORIO)
+================================================================
+
+El diseño debe ser verificado y mantenerse funcional,
+legible y usable en los siguientes rangos y dispositivos
+reales de referencia (NO crear media queries por modelo):
+
+MÓVILES PEQUEÑOS / COMPACTOS
+- 240 × 320  (JioPhone)
+- 320 × 480  (iPhone 4)
+- 320 × 533  (Nokia Lumia 520)
+- 320 × 568  (iPhone 5 / SE)
+- 320 × 658  (Samsung Galaxy S9+)
+- 344 × 882  (Galaxy Z Fold 5 – modo cerrado)
+
+MÓVILES ESTÁNDAR
+- 360 × 640  (Galaxy S5, Moto G4, Nexus 5)
+- 360 × 740  (Galaxy S8 / S8+)
+- 375 × 667  (iPhone 6 / 7 / 8 / SE)
+- 375 × 812  (iPhone X)
+- 384 × 640  (LG Optimus L70, Nexus 4)
+- 390 × 844  (iPhone 12 Pro)
+- 393 × 786  (Pixel 3 / 3 XL)
+- 411 × 731  (Pixel 2)
+- 412 × 732  (Nexus 5X / Nexus 6)
+- 412 × 823  (Moto G Power)
+- 412 × 914  (Galaxy A51 / A71)
+- 412 × 915  (Pixel 7, Galaxy S20 Ultra)
+- 414 × 736  (iPhone 6/7/8 Plus)
+- 414 × 896  (iPhone XR)
+- 430 × 932  (iPhone 14 Pro Max)
+- 480 × 854  (Nokia N9)
+
+MÓVILES PLEGABLES / ESPECIALES
+- 540 × 720  (Surface Duo)
+
+TABLETS
+- 600 × 960   (Nexus 7)
+- 712 × 1138  (Galaxy Tab S4)
+- 768 × 1024  (iPad)
+- 768 × 1094  (iPad Mini)
+- 820 × 1180  (iPad Air)
+- 912 × 1368  (Surface Pro 7)
+- 1024 × 1366 (iPad Pro)
+- 853 × 1280  (Asus Zenbook Fold)
+
+DISPOSITIVOS SMART DISPLAY
+- 1024 × 600  (Nest Hub)
+- 1280 × 800  (Nest Hub Max)
+
+REGLA:
+Estos tamaños se usan como REFERENCIA DE VALIDACIÓN,
+no como puntos rígidos de diseño por dispositivo.
+
+================================================================
+DISEÑO EN DISPOSITIVOS MÓVILES (PRIORIDAD ALTA)
+================================================================
+
+- El diseño móvil debe replantearse de forma independiente.
+- El contenido debe organizarse principalmente en columna vertical.
+- No se permite escalar visualmente el desktop hacia móvil.
+- El hero móvil debe ser claro, directo y funcional.
+- El usuario debe entender qué ofrece la página en menos de 3 segundos.
+- No se deben usar animaciones pesadas en móvil.
+- No se deben usar efectos que afecten rendimiento
+  (parallax complejo, 3D pesado, video autoplay, partículas avanzadas).
+
+================================================================
+DESKTOP Y TABLET (LIBERTAD VISUAL CONTROLADA)
+================================================================
+
+- El diseño desktop puede ser más visual, amplio y expresivo.
+- En desktop SÍ se permiten animaciones avanzadas y efectos visuales,
+  siempre que no rompan la usabilidad ni la legibilidad.
+- Se permite el uso de:
+  • Animaciones complejas con CSS o JavaScript
+  • Librerías como GSAP, Anime.js, Scroll-based animations
+  • Partículas, fondos animados y efectos interactivos
+  • Three.js y efectos 3D (uso responsable)
+  • Transiciones elaboradas y microinteracciones
+- Tablet debe ser un punto intermedio:
+  • Puede heredar parte de los efectos de desktop
+  • Pero debe priorizar rendimiento y claridad
+
+REGLA:
+Desktop es el espacio para impacto visual y diferenciación,
+móvil es el espacio para claridad, velocidad y conversión.
+
+================================================================
+ICONOS FLOTANTES (WHATSAPP, TELÉFONO, TAWK.TO, ETC.)
+================================================================
+
+Si se utilizan iconos flotantes:
+
+- Deben ser táctiles y accesibles en móvil.
+- No deben cubrir contenido importante.
+- No deben invadir formularios ni CTAs.
+- Su tamaño y posición deben ajustarse según el viewport.
+- En móvil deben ser visibles pero discretos.
+- En desktop pueden tener mayor presencia visual.
+- Deben respetar márgenes seguros (safe areas).
+
+================================================================
+TIPOGRAFÍA Y UNIDADES DE MEDIDA (OBLIGATORIO)
+================================================================
+
+TIPOGRAFÍA:
+- El tipo de fuente PUEDE cambiar según el proyecto,
+  siempre que cumpla criterios de legibilidad y rendimiento.
+- Fuente recomendada por defecto: Inter (o equivalente).
+- Fallback: system-ui, -apple-system, Segoe UI, sans-serif.
+- Preferible una sola familia con distintos pesos.
+- Pesos recomendados:
+  • 400 → texto
+  • 500–600 → subtítulos
+  • 700 → títulos
+
+LEGIBILIDAD:
+- Texto siempre legible en todos los dispositivos.
+- Tamaño mínimo en móvil:
+  • Texto normal: 1rem (16px)
+  • Títulos: 1.125rem (18px) o más
+- Line-height:
+  • Texto: 1.5
+  • Títulos: 1.2
+
+UNIDADES DE MEDIDA:
+- rem → texto, padding, margin (prioritaria).
+- em → componentes internos.
+- % → layouts flexibles.
+- vh / vw → uso controlado (hero).
+- px → solo bordes, íconos y detalles finos.
+
+PROHIBIDO:
+- Texto base definido en px.
+- Escalar visualmente desktop para móvil.
+
+================================================================
+BOTONES, CTAs Y FORMULARIOS
+================================================================
+
+- Botones fáciles de tocar en móvil.
+- Un CTA principal claro por sección.
+- Formularios optimizados para uso táctil.
+- Evitar campos innecesarios en móvil.
+
+================================================================
+TIPOS DE PÁGINAS (APLICACIÓN UNIVERSAL)
+================================================================
+
+Estas reglas aplican a:
+- Landing pages
+- Sitios corporativos
+- Portfolios
+- Páginas personalizadas
+- Páginas tipo ecommerce frontend
+- Catálogos con contacto o pago vía WhatsApp
+
+No existe excepción por tipo de proyecto.
+
+================================================================
+RENDIMIENTO
+================================================================
+
+- Priorizar carga rápida en todos los dispositivos.
+- Imágenes optimizadas.
+- En móvil, evitar librerías innecesarias.
+- En desktop, los efectos deben aportar valor real,
+  no solo decoración.
+
+================================================================
+REGLA FINAL (NO NEGOCIABLE)
+================================================================
+
+Si existe un conflicto entre:
+- estética vs usabilidad móvil
+- efecto visual vs rendimiento
+- diseño desktop vs experiencia móvil
+
+SIEMPRE se prioriza:
+USABILIDAD + CLARIDAD + RESPONSIVE REAL
+
+================================================================
+FIN DEL ARCHIVO
+================================================================
