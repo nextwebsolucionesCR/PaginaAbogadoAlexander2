@@ -487,7 +487,7 @@ h1, h2, h3, .heading-massive {
   font-weight: 300;
 }
 
-.service-item.active .service-header::after {
+.service-item.open .service-header::after {
   content: '−';
 }
 
@@ -497,7 +497,7 @@ h1, h2, h3, .heading-massive {
   transition: max-height var(--transition-slow), opacity var(--transition-slow), padding var(--transition-slow);
 }
 
-.service-item.active .service-body {
+.service-item.open .service-body {
   max-height: 1000px; /* Arbitrary large height */
   opacity: 1;
   padding-bottom: var(--spacing-md);
@@ -521,7 +521,7 @@ h1, h2, h3, .heading-massive {
   object-fit: cover;
 }
 
-.service-item.active .service-img {
+.service-item.open .service-img {
   /* Animation removed since image is already colored */
 }
 

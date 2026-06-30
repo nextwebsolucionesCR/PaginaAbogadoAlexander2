@@ -81,14 +81,14 @@ const serviceHeaders = document.querySelectorAll('.service-header');
 serviceHeaders.forEach(header => {
   header.addEventListener('click', () => {
     const item = header.parentElement;
-    const isActive = item.classList.contains('active');
+    const isOpen = item.classList.contains('open');
 
     // Close all
-    document.querySelectorAll('.service-item').forEach(i => i.classList.remove('active'));
+    document.querySelectorAll('.service-item').forEach(i => i.classList.remove('open'));
 
     // If it wasn't active, open it
-    if (!isActive) {
-      item.classList.add('active');
+    if (!isOpen) {
+      item.classList.add('open');
     }
   });
 });
