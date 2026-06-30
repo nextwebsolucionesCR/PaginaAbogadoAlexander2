@@ -689,25 +689,37 @@ h1, h2, h3, .heading-massive {
 /* =========================================
    11. FLOATING ELEMENTS & COOKIES
    ========================================= */
-.whatsapp-float {
+.floating-container {
   position: fixed;
   bottom: var(--spacing-md);
   right: var(--spacing-md);
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  z-index: 900;
+}
+
+.whatsapp-float, .phone-float {
   width: 60px;
   height: 60px;
-  background-color: #25D366;
-  color: white;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 2rem;
-  z-index: 900;
+  color: white;
   box-shadow: 0 4px 12px rgba(0,0,0,0.2);
   transition: transform var(--transition-fast);
 }
 
-.whatsapp-float:hover {
+.whatsapp-float {
+  background-color: #25D366;
+}
+
+.phone-float {
+  background-color: var(--accent-color);
+}
+
+.whatsapp-float:hover, .phone-float:hover {
   transform: scale(1.1);
 }
 
