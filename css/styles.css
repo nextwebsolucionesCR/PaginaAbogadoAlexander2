@@ -30,6 +30,7 @@ body.dark-mode {
   --text-dark: #F1F3F5; 
   --bg-inverted: #F1F3F5; 
   --text-inverted: #12211C;
+  --hero-glow: var(--accent-color);
 }
 
 /* =========================================
@@ -333,7 +334,7 @@ h1, h2, h3, .heading-massive {
   left: -10%;
   width: 80%;
   height: 80%;
-  background-color: var(--accent-color);
+  background-color: var(--hero-glow, #1B3A30);
   z-index: -1;
   border-radius: 50%;
   filter: blur(80px);
